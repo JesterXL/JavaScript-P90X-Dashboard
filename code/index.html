@@ -5,25 +5,14 @@
     
     <link href="css/DashboardApplication.css" media="all" rel="stylesheet" type="text/css"/>
     
-    <script src="libs/json2/json2.js"></script>
-    <script src="libs/jquery/jquery.js"></script>
-    <script src="libs/underscore/underscore.js"></script>
-    <script src="libs/backbone/backbone.js"></script>
-    <script src="libs/require/require.js"></script>
+    <script src="js/libs/log4javascript/log4javascript_uncompressed.js"></script>
+    <script src="js/libs/require/require.js"></script>
+    <script src="js/config.js"></script>
   </head>
 
   <body>
 
     <div id="dashboardApplication">
-
-      <div id="chestAndBack" class="routine">
-        <div class="routineTitle">Chest and Back</div>
-      </div>
-      <div id="shouldersAndArms" class="routine"></div>
-      <div id="legsAndBack" class="routine"></div>
-      <div id="chestShouldersAndTris" class="routine"></div>
-      <div id="backAndBiceps" class="routine"></div>
-      <div id="coreSynergistics" class="routine"></div>
 
     </div>
 
@@ -31,7 +20,18 @@
 
   <script>
 
-    //require(["DashboardApplication"])
+    var logger = log4javascript.getLogger("DashboardApplication");
+    logger.setLevel(log4javascript.Level.ALL);
+    logger.addAppender(new log4javascript.BrowserConsoleAppender());
+    window.logger = logger;
+    logger.debug("debug: index.html::log4javascript ready to rock.");
+
+    require(["com/jessewarden/dashboard/DashboardRouter", "DashboardApplication"], function(DashboardRouter, DashboardApplication)
+    {
+      var router = new DashboardRouter();
+      var app = new DashboardApplication();
+      router.dashboardApplication = app;
+    });
   </script>
 
 </html>
