@@ -3,7 +3,7 @@
   <head>
     <title>P90X Dashboard</title>
     
-    <link href="css/DashboardApplication.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/DashboardApplicationStyles.css" media="all" rel="stylesheet" type="text/css"/>
     
     <script src="js/libs/log4javascript/log4javascript_uncompressed.js"></script>
     <script src="js/libs/require/require.js"></script>
@@ -11,11 +11,6 @@
   </head>
 
   <body>
-
-    <div id="dashboardApplication">
-
-    </div>
-
   </body>
 
   <script>
@@ -31,6 +26,9 @@
       var router = new DashboardRouter();
       var app = new DashboardApplication();
       router.dashboardApplication = app;
+      router.currentView = app;
+      Backbone.history.start();
+      app.start();
     });
   </script>
 

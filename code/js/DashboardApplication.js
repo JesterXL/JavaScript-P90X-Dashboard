@@ -1,32 +1,39 @@
 (function(){
-define(["underscore", "backbone", "hbs!DashboardApplicationTemplate", "EventBus"], 
-    function(_, Backbone, template, EventBus)
+define(["underscore", "backbone", "hbs!DashboardApplicationTemplate", "EventBus", 
+    "com/jessewarden/dashboard/constants/Routes"], 
+    function(_, Backbone, template, EventBus, Routes)
 {
     var DashboardApplication = Backbone.View.extend(
     {
-        el: "#dashboardApplication",
+        tagName: "body",
         router: null,
-        events: 
-        {
-            "click #chestAndBack": "onChestAndBack",
-        },
 
         initialize: function()
         {
             logger.debug("DashboardApplication::initialize");
-            //this.onChestAndBack = _.bind(this.onChestAndBack, this);
+        },
+
+        start: function()
+        {
             this.render();
+            this.addEvents();
+        },
+
+        // TODO: figure out why declarative events break when I use the body tag vs. selector
+        addEvents: function()
+        {
+            this.onChestAndBack = _.bind(this.onChestAndBack, this);
+            $('#chestAndBack').click(this.onChestAndBack);
         },
 
         render: function()
         {
-            this.$el.html(template({}));
-            //$("#chestAndBack").click(this.onChestAndBack);
+            $('body').html(template({}));
         },
 
         onChestAndBack: function()
         {
-            EventBus.trigger("router:navigate", "routine/chestAndBack");
+            EventBus.trigger("router:navigate", Routes.CHEST_AND_BACK_PUSHUP);
         }
 
 
